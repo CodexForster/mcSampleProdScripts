@@ -1,0 +1,5 @@
+condor_logs_lhe_production
+*.sh
+*.jdl
+run_scripts
+*tar*
