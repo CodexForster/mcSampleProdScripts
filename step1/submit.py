@@ -87,7 +87,7 @@ if __name__ == "__main__":
     parser.add_argument("--ncpu",   dest="ncpu",   default=1,        help="Number of cpu for LHE production, default = 1", type=int)
     parser.add_argument("--njobs",  dest="njobs",  default=300,      help="Number LHE outputs, default = 300", type=int)
     parser.add_argument("--outdir", dest="outdir", default='output', help="Name for the output directory, default = output", type=str)
-    parser.add_argument("--dryrun", dest="dryrun", action="store_true")
+    parser.add_argument("--dryrun", dest="dryrun", action="store_true", help="Print bash, and jdl instead of submitting job")
 
     args = parser.parse_args()
 
