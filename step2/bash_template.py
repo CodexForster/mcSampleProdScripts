@@ -1,6 +1,5 @@
 from cmsdriver_commands import command_dict
 from jinja2 import Template
-from os import getlogin
 
 cmssw_mc_template = """#!/bin/bash
 
