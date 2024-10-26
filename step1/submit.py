@@ -61,6 +61,7 @@ error                 = {0}/$(ClusterId).$(ProcId).stderr
 log                   = {0}/$(ClusterId).$(ProcId).log
 output_destination    = root://eosuser.cern.ch//eos/user/{3}/{4}/{5}
 MY.XRDCP_CREATE_DIR   = True
++JobFlavour           = "longlunch"
 queue filename matching files {2}/*.sh
 """.format(str(log_dir), args.input, run_scripts_dir.name, os.getlogin()[0], os.getlogin(), args.outdir)
 
