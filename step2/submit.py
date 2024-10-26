@@ -7,7 +7,6 @@ def make_jobs(args):
     # files = sorted(Path(args.path).glob('cms*lhe'))
 
     bash_template = make_template(args.path, str(args.year), args.nevt)
-    print(bash_template)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
         bashfile.write(bash_template)
 
