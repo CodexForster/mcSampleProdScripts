@@ -12,6 +12,13 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 export BASEDIR=`pwd`
 
 ############
+### Add x509 proxy
+############
+export X509_USER_PROXY=${3}
+voms-proxy-info -all
+voms-proxy-info -all -file ${3}
+
+############
 ### LHE step
 ############
 export SCRAM_ARCH={{ lhe_scram_arch }}
