@@ -68,7 +68,7 @@ echo "********** SIM End **********"
 ############
 echo "********** DIGI Premix start **********"
 {{ digi_command }}
-cmsRun digi_cfg.py
+cmsRun digi_premix_cfg.py
 echo "********** DIGI Premix End **********"
 
 ############
