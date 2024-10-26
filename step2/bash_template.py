@@ -134,7 +134,11 @@ cd ${BASEDIR}
 scram p {{ nanoaod_cmssw }}
 cd {{ nanoaod_cmssw }}/src
 eval `scram runtime -sh`
-scram b
+
+mv ${BASEDIR}/CustomNanoAOD_AK15.tgz ./
+tar -zxf CustomNanoAOD_AK15.tgz
+
+scram b -j 4
 
 ### Move file
 mv ${BASEDIR}/{{ miniaod_cmssw }}/src/miniaod.root ./
