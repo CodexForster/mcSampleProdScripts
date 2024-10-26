@@ -96,12 +96,12 @@ def make_template(eos_path: str, year: str, nevt: int = 10):
     cmd_list = command_dict[year]
 
     misc_options = {
-        'input': '${1}',
         'nevt': nevt
     }
 
     cmd_options = {
         'path': eos_path,
+        'input': '${1}',
         'lhe_cmssw': cmd_list['LHE']['cmssw'],
         'lhe_command': Template(cmd_list['LHE']['command']).render(misc_options),
         'gen_command': Template(cmd_list['GEN']['command']).render(misc_options),
