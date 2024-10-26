@@ -28,6 +28,7 @@ whenToTransferOutput  = ON_EXIT
 output                = {0}/$(ClusterId).$(ProcId).stdout
 error                 = {0}/$(ClusterId).$(ProcId).stderr
 log                   = {0}/$(ClusterId).$(ProcId).log
+MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
 +JobFlavour           = "tomorrow"
 queue filename matching files {2}/cms*.lhe
 """.format(log_dir.name, f'run_MC_{args.year}.sh', args.path)
