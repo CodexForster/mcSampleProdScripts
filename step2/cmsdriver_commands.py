@@ -4,7 +4,7 @@ command_dict = {
     '2016APV': {
         'LHE': {
             'cmssw': 'CMSSW_10_6_30_patch1',
-            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein {{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_mcRun2_asymptotic_preVFP_v8 --beamspot Realistic25ns13TeV2016Collision --step NONE --era Run2_2016_HIPM --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein file:{{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_mcRun2_asymptotic_preVFP_v8 --beamspot Realistic25ns13TeV2016Collision --step NONE --era Run2_2016_HIPM --no_exec --mc -n {{ nevt }}',
         },
         'GEN': {
             'cmssw': 'CMSSW_10_6_30_patch1',
@@ -40,7 +40,7 @@ command_dict = {
     '2016': {
         'LHE': {
             'cmssw': 'CMSSW_10_6_30_patch1',
-            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein {{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step NONE --era Run2_2016 --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein file:{{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step NONE --era Run2_2016 --no_exec --mc -n {{ nevt }}',
         },
         'GEN': {
             'cmssw': 'CMSSW_10_6_30_patch1',
@@ -75,7 +75,7 @@ command_dict = {
     '2017': {
         'LHE': {
             'cmssw': 'CMSSW_10_6_30_patch1',
-            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein {{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_mc2017_realistic_v6 --step NONE --era Run2_2017 --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein file:{{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_mc2017_realistic_v6 --step NONE --era Run2_2017 --no_exec --mc -n {{ nevt }}',
         },
         'GEN': {
             'cmssw': 'CMSSW_10_6_30_patch1',
@@ -110,7 +110,7 @@ command_dict = {
     '2018': {
         'LHE': {
             'cmssw': 'CMSSW_10_6_30_patch1',
-            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein {{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_upgrade2018_realistic_v4 --step NONE --era Run2_2018 --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py Configuration/GenProduction/python/monoWprime_hadronizer.py --python_filename lhe_cfg.py --filein file:{{ input }} --fileout file:lhe.root --eventcontent LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier LHE --conditions 106X_upgrade2018_realistic_v4 --step NONE --era Run2_2018 --no_exec --mc -n {{ nevt }}',
         },
         'GEN': {
             'cmssw': 'CMSSW_10_6_30_patch1',
