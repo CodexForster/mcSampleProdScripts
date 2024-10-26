@@ -21,7 +21,7 @@ voms-proxy-info -all -file ${3}
 ############
 ### LHE step
 ############
-echo "********** LHE start **********\n"
+echo "********** LHE start **********"
 export SCRAM_ARCH={{ lhe_scram_arch }}
 scram p {{ lhe_cmssw }}
 cd {{ lhe_cmssw }}/src
@@ -35,20 +35,20 @@ scram b
 
 {{ lhe_command }}
 cmsRun lhe_cfg.py
-echo "********** LHE End **********\n"
+echo "********** LHE End **********"
 
 ############
 ### GEN step
 ############
-echo "********** GEN start **********\n"
+echo "********** GEN start **********"
 {{ gen_command }}
 cmsRun gen_cfg.py
-echo "********** GEN End **********\n"
+echo "********** GEN End **********"
 
 ############
 ### SIM step
 ############
-echo "********** SIM start **********\n"
+echo "********** SIM start **********"
 cd ${BASEDIR}
 
 scram p {{ sim_cmssw }}
@@ -61,20 +61,20 @@ mv ${BASEDIR}/{{ lhe_cmssw }}/src/gen.root ./
 
 {{ sim_command }}
 cmsRun sim_cfg.py
-echo "********** SIM End **********\n"
+echo "********** SIM End **********"
 
 ############
 ### DIGI-Premix step
 ############
-echo "********** DIGI Premix start **********\n"
+echo "********** DIGI Premix start **********"
 {{ digi_command }}
 cmsRun digi_cfg.py
-echo "********** DIGI Premix End **********\n"
+echo "********** DIGI Premix End **********"
 
 ############
 ### HLT step
 ############
-echo "********** HLT start **********\n"
+echo "********** HLT start **********"
 cd ${BASEDIR}
 export SCRAM_ARCH={{ hlt_scram_arch }}
 scram p {{ hlt_cmssw }}
@@ -87,12 +87,12 @@ mv ${BASEDIR}/{{ sim_cmssw }}/src/digiPremix.root ./
 
 {{ hlt_command }}
 cmsRun hlt_cfg.py
-echo "********** HLT End **********\n"
+echo "********** HLT End **********"
 
 ############
 ### RECO step
 ############
-echo "********** RECO start **********\n"
+echo "********** RECO start **********"
 cd ${BASEDIR}
 
 export SCRAM_ARCH={{ reco_scram_arch }}
@@ -105,12 +105,12 @@ mv ${BASEDIR}/{{ hlt_cmssw }}/src/hlt.root ./
 
 {{ reco_command }}
 cmsRun reco_cfg.py
-echo "********** RECO End **********\n"
+echo "********** RECO End **********"
 
 ############
 ### MINIAOD step
 ############
-echo "********** MINIAOD start **********\n"
+echo "********** MINIAOD start **********"
 cd ${BASEDIR}
 
 scram p {{ miniaod_cmssw }}
@@ -123,12 +123,12 @@ mv ${BASEDIR}/{{ reco_cmssw }}/src/reco.root ./
 
 {{ miniaod_command }}
 cmsRun miniaod_cfg.py
-echo "********** MINIAOD End **********\n"
+echo "********** MINIAOD End **********"
 
 ############
 ### NANOAOD step
 ############
-echo "********** NANOAOD start **********\n"
+echo "********** NANOAOD start **********"
 cd ${BASEDIR}
 
 scram p {{ nanoaod_cmssw }}
@@ -141,7 +141,7 @@ mv ${BASEDIR}/{{ miniaod_cmssw }}/src/miniaod.root ./
 
 {{ nanoaod_command }}
 cmsRun nanoaod_cfg.py
-echo "********** NANOAOD End **********\n"
+echo "********** NANOAOD End **********"
 
 ### Change file name
 mv nanoaod.root nanoaod_${4}_${5}.root
