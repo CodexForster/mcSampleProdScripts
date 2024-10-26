@@ -66,9 +66,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    current_dir = Path('./')
+    base_dir = Path('./')
     log_dir_name = 'condor_logs_mc_production'
-    log_dir = current_dir / log_dir_name
+    log_dir = base_dir / log_dir_name
     log_dir.mkdir(exist_ok=True)
 
     if log_dir.exists():
