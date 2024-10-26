@@ -10,7 +10,7 @@ def make_jobs(args, base_dir):
     with open(listfile, 'w') as listfile:
         for ifile in files:
             fname = ifile.name
-            save_string = f"{ifile} {fname}"
+            save_string = f"{ifile}, {fname}"
             listfile.write(save_string + '\n')
 
     bash_template = make_template(args.path, str(args.year), args.nevt)
