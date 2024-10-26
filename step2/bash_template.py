@@ -4,15 +4,17 @@ from os import getlogin
 
 cmssw_mc_template = """#!/bin/bash
 
+############
 ### Computing environments
+############
 echo "Starting job on " `date` #Date/time of start of job
 echo "Running on: `uname -a`" #Condor job is running on this node
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export BASEDIR=`pwd`
 
-ls -ltrh
-
+############
 ### LHE step
+############
 export SCRAM_ARCH={{ lhe_scram_arch }}
 scram p {{ lhe_cmssw }}
 cd {{ lhe_cmssw }}/src
@@ -22,23 +24,26 @@ mkdir -p Configuration/GenProduction/python/
 mv ${BASEDIR}/monoWprime_hadronizer.py Configuration/GenProduction/python/
 xrdcp root://eosuser.cern.ch/{{ path }} ./ ## Copy input file
 
-ls -ltrh
-
 scram b
 
 {{ lhe_command }}
 cmsRun lhe_cfg.py
 
+############
 ### GEN step
+############
 {{ gen_command }}
 cmsRun gen_cfg.py
 
+############
 ### SIM step
+############
 cd ${BASEDIR}
 
 scram p {{ sim_cmssw }}
 cd {{ sim_cmssw }}/src
 eval `scram runtime -sh`
+scram b
 
 ### Move file
 mv ${BASEDIR}/{{ lhe_cmssw }}/src/gen.root ./
@@ -46,60 +51,72 @@ mv ${BASEDIR}/{{ lhe_cmssw }}/src/gen.root ./
 {{ sim_command }}
 cmsRun sim_cfg.py
 
+############
 ### DIGI-Premix step
-
+############
 {{ digi_command }}
 cmsRun digi_cfg.py
 
+############
 ### HLT step
+############
 cd ${BASEDIR}
-
 export SCRAM_ARCH={{ hlt_scram_arch }}
 scram p {{ hlt_cmssw }}
 cd {{ hlt_cmssw }}/src
 eval `scram runtime -sh`
+scram b
 
 ### Move file
-mv ${BASEDIR}/{{ hlt_cmssw }}/src/digiPremix.root ./
+mv ${BASEDIR}/{{ sim_cmssw }}/src/digiPremix.root ./
 
 {{ hlt_command }}
 cmsRun hlt_cfg.py
 
+############
 ### RECO step
+############
 cd ${BASEDIR}
 
 export SCRAM_ARCH={{ reco_scram_arch }}
 cd {{ reco_cmssw }}/src
 eval `scram runtime -sh`
+scram b
 
 ### Move file
-mv ${BASEDIR}/{{ reco_cmssw }}/src/digiPremix.root ./
+mv ${BASEDIR}/{{ hlt_cmssw }}/src/hlt.root ./
 
 {{ reco_command }}
 cmsRun reco_cfg.py
 
+############
 ### MINIAOD step
+############
 cd ${BASEDIR}
 
 scram p {{ miniaod_cmssw }}
 cd {{ miniaod_cmssw }}/src
 eval `scram runtime -sh`
+scram b
 
 ### Move file
-mv ${BASEDIR}/{{ miniaod_cmssw }}/src/digiPremix.root ./
+mv ${BASEDIR}/{{ reco_cmssw }}/src/reco.root ./
 
 {{ miniaod_command }}
 cmsRun miniaod_cfg.py
 
+############
 ### NANOAOD step
+############
 cd ${BASEDIR}
 
 scram p {{ nanoaod_cmssw }}
 cd {{ nanoaod_cmssw }}/src
 eval `scram runtime -sh`
+scram b
 
 ### Move file
-mv ${BASEDIR}/{{ nanoaod_cmssw }}/src/digiPremix.root ./
+mv ${BASEDIR}/{{ miniaod_cmssw }}/src/miniaod.root ./
 
 {{ nanoaod_command }}
 cmsRun nanoaod_cfg.py
