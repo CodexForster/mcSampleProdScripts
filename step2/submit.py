@@ -29,7 +29,7 @@ def make_jobs(args, base_dir):
     jdl = """universe              = vanilla
 executable            = {1}
 Proxy_path            = {3}
-arguments             = $(path) $(fname) $(Proxy_path)
+arguments             = $(path) $(fname) $(Proxy_path) $(ClusterId) $(ProcId)
 should_Transfer_Files = YES
 transfer_input_files  = {2}
 transfer_output_files = ""
