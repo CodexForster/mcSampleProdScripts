@@ -10,7 +10,7 @@ echo "Running on: `uname -a`" #Condor job is running on this node
 export BASEDIR=`pwd`
 
 ### Copy input file
-xrdcp -r root://eosuser.cern.ch/{{ path}}/{{ input }} ./
+xrdcp -r root://eosuser.cern.ch/{{ input }} ./
 
 ls -ltrh
 
@@ -100,7 +100,6 @@ def make_template(eos_path: str, year: str, nevt: int = 10):
     }
 
     cmd_options = {
-        'path': eos_path,
         'input': '${1}',
         'lhe_cmssw': cmd_list['LHE']['cmssw'],
         'lhe_command': Template(cmd_list['LHE']['command']).render(misc_options),
