@@ -13,6 +13,7 @@ export BASEDIR=`pwd`
 ls -ltrh
 
 ### LHE step
+export SCRAM_ARCH={{ lhe_scram_arch }}
 scram p {{ lhe_cmssw }}
 cd {{ lhe_cmssw }}/src
 eval `scram runtime -sh`
@@ -52,6 +53,7 @@ cmsRun digi_cfg.py
 ### HLT step
 cd ${BASEDIR}
 
+export SCRAM_ARCH={{ hlt_scram_arch }}
 scram p {{ hlt_cmssw }}
 cd {{ hlt_cmssw }}/src
 eval `scram runtime -sh`
@@ -61,6 +63,8 @@ cmsRun hlt_cfg.py
 
 ### RECO step
 cd ${BASEDIR}
+
+export SCRAM_ARCH={{ reco_scram_arch }}
 cd {{ reco_cmssw }}/src
 eval `scram runtime -sh`
 
@@ -101,14 +105,17 @@ def make_template(eos_path: str, year: str, nevt: int = 10):
 
     cmd_options = {
         'path': '${1}',
+        'lhe_scram_arch': cmd_list['LHE']['scram_arch'],
         'lhe_cmssw': cmd_list['LHE']['cmssw'],
         'lhe_command': Template(cmd_list['LHE']['command']).render(misc_options),
         'gen_command': Template(cmd_list['GEN']['command']).render(misc_options),
         'sim_cmssw': cmd_list['SIM']['cmssw'],
         'sim_command': Template(cmd_list['SIM']['command']).render(misc_options),
         'digi_command': Template(cmd_list['DIGI']['command']).render(misc_options),
+        'hlt_scram_arch': cmd_list['HLT']['scram_arch'],
         'hlt_cmssw': cmd_list['HLT']['cmssw'],
         'hlt_command': Template(cmd_list['HLT']['command']).render(misc_options),
+        'reco_scram_arch': cmd_list['RECO']['scram_arch'],
         'reco_cmssw': cmd_list['RECO']['cmssw'],
         'reco_command': Template(cmd_list['RECO']['command']).render(misc_options),
         'miniaod_cmssw': cmd_list['MINI']['cmssw'],
