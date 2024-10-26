@@ -3,8 +3,15 @@ import argparse
 import os
 from pathlib import Path
 
-def make_jobs(args):
-    # files = sorted(Path(args.path).glob('cms*lhe'))
+def make_jobs(args, base_dir):
+    files = sorted(Path(args.path).glob('cms*lhe'))
+
+    listfile = base_dir / 'input_list.txt'
+    with open(listfile, 'w') as listfile:
+        for ifile in files:
+            fname = ifile.name
+            save_string = f"{ifile} {fname}"
+            listfile.write(save_string + '\n')
 
     bash_template = make_template(args.path, str(args.year), args.nevt)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
@@ -21,17 +28,17 @@ def make_jobs(args):
 
     jdl = """universe              = vanilla
 executable            = {1}
-arguments             = $(filename)
+arguments             = $(path) $(fname)
 should_Transfer_Files = YES
-transfer_input_files  = {3}
+transfer_input_files  = {2}
 whenToTransferOutput  = ON_EXIT
 output                = {0}/$(ClusterId).$(ProcId).stdout
 error                 = {0}/$(ClusterId).$(ProcId).stderr
 log                   = {0}/$(ClusterId).$(ProcId).log
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
 +JobFlavour           = "tomorrow"
-queue filename matching files {2}/cms*.lhe
-""".format(log_dir.name, f'run_MC_{args.year}.sh', args.path, args.hadronizer)
+queue path,fname from input_list.txt
+""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer)
 
     with open(f'condor_MC.jdl','w') as jdlfile:
         jdlfile.write(jdl)
@@ -50,10 +57,11 @@ queue filename matching files {2}/cms*.lhe
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--path",   dest="path",   required = True,  help="Input path to LHE files", type=str)
-    parser.add_argument("--nevt",   dest="nevt",   default=500,      help="Number of events to produce, default = 500", type=int)
-    parser.add_argument("--year",   dest="year",   default=2018,     help="Year for MC production")
-    parser.add_argument("--hadronizer",   dest="hadronizer",  help="Hadronizer file")
+    parser.add_argument("--path",       dest="path",        required = True,  help="Input path to LHE files", type=str)
+    parser.add_argument("--hadronizer", dest="hadronizer",  required = True,  help="Hadronizer file")
+    parser.add_argument("--nevt",       dest="nevt",        default=500,      help="Number of events to produce, default = 500", type=int)
+    parser.add_argument("--year",       dest="year",        default=2018,     help="Year for MC production")
+
     parser.add_argument("--dryrun", dest="dryrun", action="store_true", help="Print bash, and jdl instead of submitting job")
 
     args = parser.parse_args()
@@ -69,4 +77,4 @@ if __name__ == "__main__":
         os.system(f'rm {log_dir_name}/*stderr')
         os.system(f'ls {log_dir_name}/*log | wc -l')
 
-    make_jobs(args)
+    make_jobs(args, base_dir)
