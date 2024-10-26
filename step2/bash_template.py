@@ -20,7 +20,7 @@ eval `scram runtime -sh`
 
 mkdir -p Configuration/GenProduction/python/
 mv ${BASEDIR}/monoWprime_hadronizer.py Configuration/GenProduction/python/
-xrdcp -r root://eosuser.cern.ch/{{ path }} ./ ## Copy input file
+xrdcp root://eosuser.cern.ch/{{ path }} ./ ## Copy input file
 
 ls -ltrh
 
@@ -41,6 +41,7 @@ cd {{ sim_cmssw }}/src
 eval `scram runtime -sh`
 
 ### Move file
+mv ${BASEDIR}/{{ lhe_cmssw }}/src/gen.root ./
 
 {{ sim_command }}
 cmsRun sim_cfg.py
@@ -58,6 +59,9 @@ scram p {{ hlt_cmssw }}
 cd {{ hlt_cmssw }}/src
 eval `scram runtime -sh`
 
+### Move file
+mv ${BASEDIR}/{{ hlt_cmssw }}/src/digiPremix.root ./
+
 {{ hlt_command }}
 cmsRun hlt_cfg.py
 
@@ -67,6 +71,9 @@ cd ${BASEDIR}
 export SCRAM_ARCH={{ reco_scram_arch }}
 cd {{ reco_cmssw }}/src
 eval `scram runtime -sh`
+
+### Move file
+mv ${BASEDIR}/{{ reco_cmssw }}/src/digiPremix.root ./
 
 {{ reco_command }}
 cmsRun reco_cfg.py
@@ -78,6 +85,9 @@ scram p {{ miniaod_cmssw }}
 cd {{ miniaod_cmssw }}/src
 eval `scram runtime -sh`
 
+### Move file
+mv ${BASEDIR}/{{ miniaod_cmssw }}/src/digiPremix.root ./
+
 {{ miniaod_command }}
 cmsRun miniaod_cfg.py
 
@@ -88,10 +98,13 @@ scram p {{ nanoaod_cmssw }}
 cd {{ nanoaod_cmssw }}/src
 eval `scram runtime -sh`
 
+### Move file
+mv ${BASEDIR}/{{ nanoaod_cmssw }}/src/digiPremix.root ./
+
 {{ nanoaod_command }}
 cmsRun nanoaod_cfg.py
 
-### Copy NanoAOD file to storage
+### Change file name
 mv nanoaod.root nanoaod_$(ClusterId)_$(ProcId).root
 """
 
