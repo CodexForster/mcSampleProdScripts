@@ -7,10 +7,8 @@ cmssw_mc_template = """#!/bin/bash
 ### Computing environments
 echo "Starting job on " `date` #Date/time of start of job
 echo "Running on: `uname -a`" #Condor job is running on this node
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 export BASEDIR=`pwd`
-
-### Copy input file
-xrdcp -r root://eosuser.cern.ch/{{ input }} ./
 
 ls -ltrh
 
@@ -21,6 +19,7 @@ eval `scram runtime -sh`
 
 mkdir -p Configuration/GenProduction/python/
 mv ${BASEDIR}/monoWprime_hadronizer.py Configuration/GenProduction/python/
+xrdcp -r root://eosuser.cern.ch/{{ path }} ./ ## Copy input file
 
 ls -ltrh
 
@@ -96,11 +95,12 @@ def make_template(eos_path: str, year: str, nevt: int = 10):
     cmd_list = command_dict[year]
 
     misc_options = {
+        'input': '${2}',
         'nevt': nevt
     }
 
     cmd_options = {
-        'input': '${1}',
+        'path': '${1}',
         'lhe_cmssw': cmd_list['LHE']['cmssw'],
         'lhe_command': Template(cmd_list['LHE']['command']).render(misc_options),
         'gen_command': Template(cmd_list['GEN']['command']).render(misc_options),
