@@ -149,7 +149,7 @@ echo "********** NANOAOD End **********"
 
 ### Change file name
 mv nanoaod.root nanoaod_${4}_${5}.root
-xrdcp nanoaod_${4}_${5}.root {6}
+xrdcp -f nanoaod_${4}_${5}.root ${6}
 """
 
 def make_template(eos_path: str, year: str, nevt: int = 10):
