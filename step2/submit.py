@@ -13,7 +13,7 @@ def make_jobs(args, base_dir):
             save_string = f"{ifile}, {fname}"
             listfile.write(save_string + '\n')
 
-    bash_template = make_template(args.path, str(args.year), args.nevt)
+    bash_template = make_template(args.eospath, str(args.year), args.nevt)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
         bashfile.write(bash_template)
 
@@ -29,7 +29,7 @@ def make_jobs(args, base_dir):
     jdl = """universe              = vanilla
 executable            = {1}
 Proxy_path            = {3}
-arguments             = $(path) $(fname) $(Proxy_path) $(ClusterId) $(ProcId) {4}
+arguments             = $(path) $(fname) $(Proxy_path) $(ClusterId) $(ProcId)
 should_Transfer_Files = YES
 transfer_input_files  = {2},CustomNanoAOD_AK15.tgz
 transfer_output_files = ""
@@ -39,7 +39,7 @@ log                   = {0}/$(ClusterId).$(ProcId).log
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
 +JobFlavour           = "tomorrow"
 queue path,fname from input_list.txt
-""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath, args.eospath)
+""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath)
 
     with open(f'condor_MC.jdl','w') as jdlfile:
         jdlfile.write(jdl)
