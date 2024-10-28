@@ -149,11 +149,13 @@ echo "********** NANOAOD End **********"
 
 ### Change file name
 mv nanoaod.root nanoaod_${4}_${5}.root
-xrdcp -f nanoaod_${4}_${5}.root ${6}
+xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
+xrdcp -f nanoaod_${4}_${5}.root {{ full_eospath }}/nanoaod_${4}_${5}.root
 """
 
-def make_template(eos_path: str, year: str, nevt: int = 10):
+def make_template(eospath: str, year: str, nevt: int = 10):
     cmd_list = command_dict[year]
+    path_list = eospath.split('//')
 
     misc_options = {
         'input': '${2}',
@@ -162,6 +164,9 @@ def make_template(eos_path: str, year: str, nevt: int = 10):
 
     cmd_options = {
         'path': '${1}',
+        'xrootd_protocol': f'{path_list[0]}//{path_list[1]}',
+        'eos_localpath': f'/{path_list[2]}',
+        'full_eospath': eospath,
         'lhe_scram_arch': cmd_list['LHE']['scram_arch'],
         'lhe_cmssw': cmd_list['LHE']['cmssw'],
         'lhe_command': Template(cmd_list['LHE']['command']).render(misc_options),
