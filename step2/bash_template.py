@@ -164,7 +164,7 @@ def make_template(eospath: str, year: str, nevt: int = 10):
 
     cmd_options = {
         'path': '${1}',
-        'xrootd_protocol': f'{path_list[0]}//{path_list[1]}',
+        'xrootd_protocol': f'{path_list[0]}//{path_list[1]}/',
         'eos_localpath': f'/{path_list[2]}',
         'full_eospath': eospath,
         'lhe_scram_arch': cmd_list['LHE']['scram_arch'],
