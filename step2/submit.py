@@ -93,6 +93,7 @@ transfer_output_files = ""
 output                = {0}/$(ClusterId).$(ProcId).stdout
 error                 = {0}/$(ClusterId).$(ProcId).stderr
 log                   = {0}/$(ClusterId).$(ProcId).log
+request_memory        = 4096
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
 +JobFlavour           = "tomorrow"
 queue path,fname from input_list.txt
