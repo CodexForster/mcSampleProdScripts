@@ -11,12 +11,7 @@ echo "Running on: `uname -a`" #Condor job is running on this node
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export BASEDIR=`pwd`
 
-############
-### Add x509 proxy
-############
-export X509_USER_PROXY=${3}
-voms-proxy-info -all
-voms-proxy-info -all -file ${3}
+{{ proxy_template }}
 
 ############
 ### LHE step
@@ -153,7 +148,17 @@ xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
 xrdcp -f nanoaod_${4}_${5}.root {{ full_eospath }}/nanoaod_${4}_${5}.root
 """
 
-def make_template(eospath: str, year: str, nevt: int = 10):
+proxy_template="""
+############
+### Add x509 proxy
+############
+export X509_USER_PROXY=${3}
+voms-proxy-info -all
+voms-proxy-info -all -file ${3}
+"""
+
+
+def make_template(eospath: str, year: str, nevt: int = 10, submit_lpc: bool = False):
     cmd_list = command_dict[year]
     path_list = eospath.split('//')
 
@@ -184,6 +189,7 @@ def make_template(eospath: str, year: str, nevt: int = 10):
         'miniaod_command': Template(cmd_list['MINI']['command']).render(misc_options),
         'nanoaod_cmssw': cmd_list['NANO']['cmssw'],
         'nanoaod_command': Template(cmd_list['NANO']['command']).render(misc_options),
+        'proxy_template': proxy_template if submit_lpc else ""
     }
 
     bash_script = Template(cmssw_mc_template).render(cmd_options)
