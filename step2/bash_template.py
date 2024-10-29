@@ -143,18 +143,18 @@ cmsRun nanoaod_cfg.py
 echo "********** NANOAOD End **********"
 
 ### Change file name
-mv nanoaod.root nanoaod_${4}_${5}.root
+mv nanoaod.root nanoaod_${3}_${4}.root
 xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
-xrdcp -f nanoaod_${4}_${5}.root {{ full_eospath }}/nanoaod_${4}_${5}.root
+xrdcp -f nanoaod_${3}_${4}.root {{ full_eospath }}/nanoaod_${3}_${4}.root
 """
 
 proxy_template="""
 ############
 ### Add x509 proxy
 ############
-export X509_USER_PROXY=${3}
+export X509_USER_PROXY=${5}
 voms-proxy-info -all
-voms-proxy-info -all -file ${3}
+voms-proxy-info -all -file ${5}
 """
 
 
