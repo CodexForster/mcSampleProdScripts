@@ -71,7 +71,7 @@ def make_jobs_lpc(args, base_dir):
                 save_string = f"{ifile}, {fname}"
                 listfile.write(save_string + '\n')
 
-    bash_template = make_template(args.eospath, str(args.year), args.nevt)
+    bash_template = make_template(args.eospath, str(args.year), args.nevt, args.lpc)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
         bashfile.write(bash_template)
 
