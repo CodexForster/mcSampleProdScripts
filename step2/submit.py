@@ -30,7 +30,7 @@ def make_jobs(args, base_dir):
     jdl = """universe              = vanilla
 executable            = {1}
 Proxy_path            = {3}
-arguments             = $(path) $(fname) $(Proxy_path) $(ClusterId) $(ProcId)
+arguments             = $(path) $(fname) $(ClusterId) $(ProcId) $(Proxy_path)
 should_Transfer_Files = YES
 transfer_input_files  = {2},CustomNanoAOD_AK15.tgz
 transfer_output_files = ""
@@ -93,7 +93,7 @@ transfer_output_files = ""
 output                = {0}/$(Cluster).$(Process).stdout
 error                 = {0}/$(Cluster).$(Process).stderr
 log                   = {0}/$(Cluster).$(Process).log
-request_memory        = 4096
+request_memory        = 5120
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
 +JobFlavour           = "tomorrow"
 queue path,fname from input_list.txt
