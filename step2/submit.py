@@ -86,13 +86,13 @@ def make_jobs_lpc(args, base_dir):
 
     jdl = """universe              = vanilla
 executable            = {1}
-arguments             = $(path) $(fname) $(ClusterId) $(ProcId)
+arguments             = $(path) $(fname) $(Cluster) $(Process)
 should_Transfer_Files = YES
 transfer_input_files  = {2},CustomNanoAOD_AK15.tgz
 transfer_output_files = ""
-output                = {0}/$(ClusterId).$(ProcId).stdout
-error                 = {0}/$(ClusterId).$(ProcId).stderr
-log                   = {0}/$(ClusterId).$(ProcId).log
+output                = {0}/$(Cluster).$(Process).stdout
+error                 = {0}/$(Cluster).$(Process).stderr
+log                   = {0}/$(Cluster).$(Process).log
 request_memory        = 4096
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
 +JobFlavour           = "tomorrow"
