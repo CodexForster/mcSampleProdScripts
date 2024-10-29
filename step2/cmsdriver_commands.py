@@ -15,12 +15,12 @@ command_dict = {
         'SIM': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 4 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_mcRun2_asymptotic_preVFP_v8 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --era Run2_2016_HIPM --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 2 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_mcRun2_asymptotic_preVFP_v8 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --era Run2_2016_HIPM --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'DIGI': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 4 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" --conditions 106X_mcRun2_asymptotic_preVFP_v8 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2016_HIPM --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 2 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" --conditions 106X_mcRun2_asymptotic_preVFP_v8 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2016_HIPM --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'HLT': {
             'scram_arch': 'slc7_amd64_gcc530',
@@ -59,12 +59,12 @@ command_dict = {
         'SIM': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 4 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --era Run2_2016 --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 2 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --era Run2_2016 --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'DIGI': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 4 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" --conditions 106X_mcRun2_asymptotic_v13 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2016 --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 2 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" --conditions 106X_mcRun2_asymptotic_v13 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2016 --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'HLT': {
             'scram_arch': 'slc7_amd64_gcc530',
@@ -102,12 +102,12 @@ command_dict = {
         'SIM': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 4 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_mc2017_realistic_v6 --beamspot Realistic25ns13TeVEarly2017Collision --step SIM --geometry DB:Extended --era Run2_2017 --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 2 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_mc2017_realistic_v6 --beamspot Realistic25ns13TeVEarly2017Collision --step SIM --geometry DB:Extended --era Run2_2017 --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'DIGI': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 4 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL17_106X_mc2017_realistic_v6-v3/PREMIX" --conditions 106X_mc2017_realistic_v6 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2017 --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 2 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL17_106X_mc2017_realistic_v6-v3/PREMIX" --conditions 106X_mc2017_realistic_v6 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2017 --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'HLT': {
             'scram_arch': 'slc7_amd64_gcc630',
@@ -145,12 +145,12 @@ command_dict = {
         'SIM': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 4 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_upgrade2018_realistic_v11_L1v1 --beamspot Realistic25ns13TeVEarly2018Collision --step SIM --geometry DB:Extended --era Run2_2018 --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename sim_cfg.py --filein file:gen.root --fileout file:sim.root --nThreads 2 --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_upgrade2018_realistic_v11_L1v1 --beamspot Realistic25ns13TeVEarly2018Collision --step SIM --geometry DB:Extended --era Run2_2018 --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'DIGI': {
             'scram_arch': 'slc7_amd64_gcc700',
             'cmssw': 'CMSSW_10_6_17_patch1',
-            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 4 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" --conditions 106X_upgrade2018_realistic_v11_L1v1 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2018 --runUnscheduled --no_exec --mc -n {{ nevt }}',
+            'command': 'cmsDriver.py --python_filename digi_premix_cfg.py --filein file:sim.root --fileout file:digiPremix.root --nThreads 2 --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" --conditions 106X_upgrade2018_realistic_v11_L1v1 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2018 --runUnscheduled --no_exec --mc -n {{ nevt }}',
         },
         'HLT': {
             'scram_arch': 'slc7_amd64_gcc700',
