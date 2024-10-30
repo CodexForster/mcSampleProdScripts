@@ -3,6 +3,8 @@ from jinja2 import Template
 
 cmssw_mc_template = """#!/bin/bash
 
+{{ LC_template }}
+
 ############
 ### Computing environments
 ############
@@ -157,6 +159,15 @@ voms-proxy-info -all
 voms-proxy-info -all -file ${5}
 """
 
+LC_template = """
+############
+### Set LANG environments
+############
+export LC_CTYPE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+"""
 
 def make_template(eospath: str, year: str, nevt: int = 10, submit_lpc: bool = False):
     cmd_list = command_dict[year]
@@ -189,7 +200,8 @@ def make_template(eospath: str, year: str, nevt: int = 10, submit_lpc: bool = Fa
         'miniaod_command': Template(cmd_list['MINI']['command']).render(misc_options),
         'nanoaod_cmssw': cmd_list['NANO']['cmssw'],
         'nanoaod_command': Template(cmd_list['NANO']['command']).render(misc_options),
-        'proxy_template': proxy_template if not submit_lpc else ""
+        'proxy_template': proxy_template if not submit_lpc else "",
+        'LC_template': LC_template if not submit_lpc else "",
     }
 
     bash_script = Template(cmssw_mc_template).render(cmd_options)
