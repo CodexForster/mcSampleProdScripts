@@ -201,7 +201,7 @@ def make_template(eospath: str, year: str, nevt: int = 10, submit_lpc: bool = Fa
         'nanoaod_cmssw': cmd_list['NANO']['cmssw'],
         'nanoaod_command': Template(cmd_list['NANO']['command']).render(misc_options),
         'proxy_template': proxy_template if not submit_lpc else "",
-        'LC_template': LC_template if not submit_lpc else "",
+        'LC_template': LC_template if submit_lpc else "",
     }
 
     bash_script = Template(cmssw_mc_template).render(cmd_options)
