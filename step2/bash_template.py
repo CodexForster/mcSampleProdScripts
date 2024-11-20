@@ -177,7 +177,7 @@ def make_template(eospath: str, year: str, nevt: int = 10, backup: str = "", sub
     cmd_list = command_dict[year]
     path_list = eospath.split('//')
 
-    cernbox_outpath = f"xrdcp -f nanoaod_${3}_${4}.root root://eosuser.cern.ch/{backup}/nanoaod_${3}_${4}.root"
+    cernbox_outpath = f"xrdcp -f nanoaod_${{3}}_${{4}}.root root://eosuser.cern.ch/{backup}/nanoaod_${{3}}_${{4}}.root"
     if backup == "":
         cernbox_outpath = ""
 
