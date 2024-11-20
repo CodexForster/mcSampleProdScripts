@@ -14,7 +14,7 @@ def make_jobs(args, base_dir):
             save_string = f"{ifile}, {fname}"
             listfile.write(save_string + '\n')
 
-    bash_template = make_template(args.eospath, str(args.year), args.nevt)
+    bash_template = make_template(args.eospath, str(args.year), args.nevt, args.backup)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
         bashfile.write(bash_template)
 
@@ -120,6 +120,7 @@ if __name__ == "__main__":
     parser.add_argument("--hadronizer", dest="hadronizer",  required = True,  help="Hadronizer file")
     parser.add_argument("--proxypath",  dest="proxypath",   required = True,  help="Full AFS path to your x509 proxy", type=str)
     parser.add_argument("--eospath",    dest="eospath",     required = True,  help="EOS path to store NanoAODs", type=str)
+    parser.add_argument("--backup",     dest="backup",      default="",       help="Extra path to save NanoAOD", type=str)
     parser.add_argument("--nevt",       dest="nevt",        default=500,      help="Number of events to produce, default = 500", type=int)
     parser.add_argument("--year",       dest="year",        default=2018,     help="Year for MC production")
     parser.add_argument("--lpc",    dest="lpc",    action="store_true", help="Submit condor jobs on LPC server")
