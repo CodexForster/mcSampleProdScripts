@@ -148,6 +148,9 @@ echo "********** NANOAOD End **********"
 mv nanoaod.root nanoaod_${3}_${4}.root
 xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
 xrdcp -f nanoaod_${3}_${4}.root {{ full_eospath }}/nanoaod_${3}_${4}.root
+
+### Backup path to save NanoAOD
+{{ cernbox_outpath }}
 """
 
 proxy_template="""
@@ -169,9 +172,14 @@ export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 """
 
-def make_template(eospath: str, year: str, nevt: int = 10, submit_lpc: bool = False):
+
+def make_template(eospath: str, year: str, nevt: int = 10, backup: str = "", submit_lpc: bool = False):
     cmd_list = command_dict[year]
     path_list = eospath.split('//')
+
+    cernbox_outpath = "xrdcp -f nanoaod_${3}_${4}.root root://eosuser.cern.ch/{{ cernbox_path }}/nanoaod_${3}_${4}.root"
+    if backup == "":
+        cernbox_outpath = ""
 
     misc_options = {
         'input': '${2}',
@@ -183,6 +191,7 @@ def make_template(eospath: str, year: str, nevt: int = 10, submit_lpc: bool = Fa
         'xrootd_protocol': f'{path_list[0]}//{path_list[1]}/',
         'eos_localpath': f'/{path_list[2]}/',
         'full_eospath': eospath,
+        'cernbox_outpath': cernbox_outpath,
         'lhe_scram_arch': cmd_list['LHE']['scram_arch'],
         'lhe_cmssw': cmd_list['LHE']['cmssw'],
         'lhe_command': Template(cmd_list['LHE']['command']).render(misc_options),
