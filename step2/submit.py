@@ -32,15 +32,16 @@ executable            = {1}
 Proxy_path            = {3}
 arguments             = $(path) $(fname) $(ClusterId) $(ProcId) $(Proxy_path)
 should_Transfer_Files = YES
-transfer_input_files  = {2},CustomNanoAOD_AK15.tgz
+transfer_input_files  = {2}
 transfer_output_files = ""
 output                = {0}/$(ClusterId).$(ProcId).stdout
 error                 = {0}/$(ClusterId).$(ProcId).stderr
 log                   = {0}/$(ClusterId).$(ProcId).log
-MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el7-full:latest"
+MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el8-full:latest"
 +JobFlavour           = "tomorrow"
-queue path,fname from input_list.txt
+queue 5
 """.format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath)
+#queue path,fname from input_list.txt
 
     with open(f'condor_MC.jdl','w') as jdlfile:
         jdlfile.write(jdl)
@@ -121,7 +122,7 @@ if __name__ == "__main__":
     parser.add_argument("--proxypath",  dest="proxypath",   required = True,  help="Full AFS path to your x509 proxy", type=str)
     parser.add_argument("--eospath",    dest="eospath",     required = True,  help="EOS path to store NanoAODs", type=str)
     parser.add_argument("--backup",     dest="backup",      default="",       help="Extra path to save NanoAOD", type=str)
-    parser.add_argument("--nevt",       dest="nevt",        default=500,      help="Number of events to produce, default = 500", type=int)
+    parser.add_argument("--nevt",       dest="nevt",        default=10,      help="Number of events to produce, default = 10", type=int)
     parser.add_argument("--year",       dest="year",        default=2018,     help="Year for MC production")
     parser.add_argument("--lpc",    dest="lpc",    action="store_true", help="Submit condor jobs on LPC server")
     parser.add_argument("--dryrun", dest="dryrun", action="store_true", help="Print bash, and jdl instead of submitting job")
