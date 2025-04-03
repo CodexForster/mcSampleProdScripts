@@ -7,12 +7,12 @@ from pathlib import Path
 def make_jobs(args, base_dir):
     files = sorted(Path(args.path).glob('cms*lhe'))
 
-    listfile = base_dir / 'input_list.txt'
-    with open(listfile, 'w') as listfile:
-        for ifile in files:
-            fname = ifile.name
-            save_string = f"{ifile}, {fname}"
-            listfile.write(save_string + '\n')
+    # listfile = base_dir / 'input_list.txt'
+    # with open(listfile, 'w') as listfile:
+    #     for ifile in files:
+    #         fname = ifile.name
+    #         save_string = f"{ifile}, {fname}"
+    #         listfile.write(save_string + '\n')
 
     bash_template = make_template(args.eospath, str(args.year), args.nevt, args.backup)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
@@ -38,10 +38,9 @@ output                = {0}/$(ClusterId).$(ProcId).stdout
 error                 = {0}/$(ClusterId).$(ProcId).stderr
 log                   = {0}/$(ClusterId).$(ProcId).log
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el8-full:latest"
-+JobFlavour           = "tomorrow"
++JobFlavour           = "workday"
 queue 5
 """.format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath)
-#queue path,fname from input_list.txt
 
     with open(f'condor_MC.jdl','w') as jdlfile:
         jdlfile.write(jdl)

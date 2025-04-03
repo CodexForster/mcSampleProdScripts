@@ -81,7 +81,7 @@ echo "********** NANOAOD End **********"
 
 ### Change file name
 mv nanoaod.root nanoaod_${3}_${4}.root
-# xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
+xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
 xrdcp -f nanoaod_${3}_${4}.root {{ full_eospath }}/nanoaod_${3}_${4}.root
 
 ### Backup path to save NanoAOD
@@ -124,8 +124,8 @@ def make_template(eospath: str, year: str, nevt: int = 10, backup: str = "", sub
 
     cmd_options = {
         'path': '${1}',
-        # 'xrootd_protocol': f'{path_list[0]}//{path_list[1]}/',
-        # 'eos_localpath': f'/{path_list[2]}/',
+        'xrootd_protocol': f'{path_list[0]}//{path_list[1]}/',
+        'eos_localpath': f'/{path_list[2]}/',
         'full_eospath': eospath,
         'cernbox_outpath': cernbox_outpath,
         'lhegs_scram_arch': cmd_list['LHEGS']['scram_arch'],
