@@ -42,7 +42,7 @@ mv ${BASEDIR}/{{ lhegs_cmssw }}/src/vbfhToWW2L2Nu_LHEGS.root ./
 ### DIGI-Premix step
 ############
 echo "********** DIGI Premix start **********"
-{{ DRPremix_command }}
+{{ drpremix_command }}
 cmsRun DRPremix_cfg.py
 
 echo "********** DIGI Premix End **********"
