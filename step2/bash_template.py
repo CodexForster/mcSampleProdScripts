@@ -36,7 +36,7 @@ scram b
 cmsRun wmLHEGS_cfg.py
 echo "********** LHE End **********"
 
-mv ${BASEDIR}/{{ lhe_cmssw }}/src/vbfhToWW2L2Nu_LHEGS.root ./
+mv ${BASEDIR}/{{ lhegs_cmssw }}/src/vbfhToWW2L2Nu_LHEGS.root ./
 
 ############
 ### DIGI-Premix step
@@ -69,7 +69,7 @@ cmsRun miniaod_cfg.py
 echo "********** MINIAOD End **********"
 
 ### Move file
-mv ${BASEDIR}/{{ reco_cmssw }}/src/miniaod.root ./
+mv ${BASEDIR}/{{ miniaod_cmssw }}/src/miniaod.root ./
 
 ############
 ### NANOAOD step
