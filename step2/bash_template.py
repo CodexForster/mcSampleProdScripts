@@ -47,7 +47,7 @@ cmsRun DRPremix_cfg.py
 
 echo "********** DIGI Premix End **********"
 
-mv ${BASEDIR}/{{ drpremix_cmssw }}/src/DRPremix.root ./
+mv ${BASEDIR}/{{ drpremix_cmssw }}/src/vbfhToWW2L2Nu_DRPremix.root ./
 
 ############
 ### AOD step
@@ -58,7 +58,7 @@ cmsRun aod_cfg.py
 echo "********** AOD End **********"
 
 ### Move file
-mv ${BASEDIR}/{{ aod_cmssw }}/src/aod.root ./
+mv ${BASEDIR}/{{ aod_cmssw }}/src/vbfhToWW2L2Nu_aod.root ./
 
 ############
 ### MINIAOD step
@@ -69,7 +69,7 @@ cmsRun miniaod_cfg.py
 echo "********** MINIAOD End **********"
 
 ### Move file
-mv ${BASEDIR}/{{ miniaod_cmssw }}/src/miniaod.root ./
+mv ${BASEDIR}/{{ miniaod_cmssw }}/src/vbfhToWW2L2Nu_miniaod.root ./
 
 ############
 ### NANOAOD step
@@ -80,7 +80,7 @@ cmsRun nanoaod_cfg.py
 echo "********** NANOAOD End **********"
 
 ### Change file name
-mv nanoaod.root nanoaod_${3}_${4}.root
+mv vbfhToWW2L2Nu_nanoaod.root nanoaod_${3}_${4}.root
 xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
 xrdcp -f nanoaod_${3}_${4}.root {{ full_eospath }}/nanoaod_${3}_${4}.root
 
