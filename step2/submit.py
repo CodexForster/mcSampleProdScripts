@@ -122,7 +122,7 @@ if __name__ == "__main__":
     parser.add_argument("--eospath",    dest="eospath",     required = True,  help="EOS path to store NanoAODs", type=str)
     parser.add_argument("--backup",     dest="backup",      default="",       help="Extra path to save NanoAOD", type=str)
     parser.add_argument("--nevt",       dest="nevt",        default=10,      help="Number of events to produce, default = 10", type=int)
-    parser.add_argument("--year",       dest="year",        default=2018,     help="Year for MC production")
+    parser.add_argument("--year",       dest="year",        default=2023,     help="Year for MC production")
     parser.add_argument("--lpc",    dest="lpc",    action="store_true", help="Submit condor jobs on LPC server")
     parser.add_argument("--dryrun", dest="dryrun", action="store_true", help="Print bash, and jdl instead of submitting job")
 
@@ -131,13 +131,14 @@ if __name__ == "__main__":
     base_dir = Path('./')
     log_dir_name = 'condor_logs_mc_production'
     log_dir = base_dir / log_dir_name
-    log_dir.mkdir(exist_ok=True)
 
     if log_dir.exists():
         os.system(f'rm {log_dir_name}/*log')
         os.system(f'rm {log_dir_name}/*stdout')
         os.system(f'rm {log_dir_name}/*stderr')
         os.system(f'ls {log_dir_name}/*log | wc -l')
+
+    log_dir.mkdir(exist_ok=True)
 
     if not args.lpc:
         make_jobs(args, base_dir)
