@@ -175,3 +175,4 @@ def make_template(eospath: str, year: str, nevt: int = 10, backup: str = "", sub
 
     bash_script = Template(cmssw_mc_template).render(cmd_options)
     return bash_script
+
