@@ -15,6 +15,12 @@ export BASEDIR=`pwd`
 echo "basedir = ${BASEDIR}"
 
 {{ proxy_template }}
+echo "DAN "
+echo "Argument 0: ${0}"
+echo "Argument 1: ${1}"
+echo "Argument 2: ${2}"
+echo "Argument 3: ${3}"
+echo "Argument 4: ${4}"
 
 ############
 ### LHEGS step
@@ -27,7 +33,7 @@ eval `scram runtime -sh`
 
 mkdir -p Configuration/GenProduction/python/
 mv ${BASEDIR}/vbf_h_ww_2l2Nu_el8_amd64_gcc11_CMSSW_13_0_13-fragment.py Configuration/GenProduction/python/
-xrdcp root://eosuser.cern.ch/{{ path }} ./ ## Copy input file
+# xrdcp root://eosuser.cern.ch/{{ path }} ./ ## Copy input file
 echo "path = ${{ path }}"
 
 scram b
@@ -80,9 +86,9 @@ cmsRun nanoaod_cfg.py
 echo "********** NANOAOD End **********"
 
 ### Change file name
-mv vbfhToWW2L2Nu_nanoaod.root nanoaod_${3}_${4}.root
+mv vbfhToWW2L2Nu_nanoaod.root nanoaod.root
 xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
-xrdcp -f nanoaod_${3}_${4}.root {{ full_eospath }}/nanoaod_${3}_${4}.root
+xrdcp -f nanoaod.root {{ full_eospath }}/nanoaod.root
 
 ### Backup path to save NanoAOD
 {{ cernbox_outpath }}
@@ -92,9 +98,9 @@ proxy_template="""
 ############
 ### Add x509 proxy
 ############
-export X509_USER_PROXY=${5}
+export X509_USER_PROXY=${3}
 voms-proxy-info -all
-voms-proxy-info -all -file ${5}
+voms-proxy-info -all -file ${3}
 """
 
 LC_template = """
@@ -112,12 +118,12 @@ def make_template(eospath: str, year: str, nevt: int = 10, backup: str = "", sub
     cmd_list = command_dict[year]
     path_list = eospath.split('//')
 
-    cernbox_outpath = f"xrdcp -f nanoaod_${{3}}_${{4}}.root root://eosuser.cern.ch/{backup}/nanoaod_${{3}}_${{4}}.root"
+    cernbox_outpath = f"xrdcp -f nanoaod.root root://eosuser.cern.ch/{backup}/nanoaod.root"
     if backup == "":
         cernbox_outpath = ""
 
     misc_options = {
-        'input': '${2}',
+        # 'input': '${2}',
         'nevt': nevt
     }
     print("path_list: ", path_list)
