@@ -71,7 +71,7 @@ mv ${BASEDIR}/{{ aod_cmssw }}/src/vbfhToWW2L2Nu_aod.root ./
 ############
 echo "********** MINIAOD start **********"
 {{ miniaod_command }}
-cmsRun miniaod_cfg.py
+cmsRun miniAOD_cfg.py
 echo "********** MINIAOD End **********"
 
 ### Move file
@@ -82,13 +82,13 @@ mv ${BASEDIR}/{{ miniaod_cmssw }}/src/vbfhToWW2L2Nu_miniaod.root ./
 ############
 echo "********** NANOAOD start **********"
 {{ nanoaod_command }}
-cmsRun nanoaod_cfg.py
+cmsRun nanoAOD_cfg.py
 echo "********** NANOAOD End **********"
 
 ### Change file name
-mv vbfhToWW2L2Nu_nanoaod.root nanoaod.root
+mv vbfhToWW2L2Nu_nanoAOD.root nanoAOD.root
 xrdfs {{ xrootd_protocol }} mkdir -p {{ eos_localpath }}
-xrdcp -f nanoaod.root {{ full_eospath }}/nanoaod.root
+xrdcp -f nanoAOD.root {{ full_eospath }}/nanoAOD.root
 
 ### Backup path to save NanoAOD
 {{ cernbox_outpath }}
