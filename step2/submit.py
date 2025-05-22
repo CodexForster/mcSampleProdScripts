@@ -64,7 +64,7 @@ log                   = {0}/$(ClusterId).$(ProcId).log
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el8-full:latest"
 +JobFlavour           = "workday"
 queue 1
-""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath, proxyfilename, args.hadronizer)
+""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath, proxyfilename, args.pyedits)
 
     with open(f'condor_MC.jdl','w') as jdlfile:
         jdlfile.write(jdl)
