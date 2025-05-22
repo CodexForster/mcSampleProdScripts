@@ -9,7 +9,7 @@ def extract_after_dbs(filename):
         for line in f:
             match = re.search(r'dbs:(/\S+)', line)
             if match:
-                return match.group(1)  # The string after 'dbs:'
+                return match.group(1).rstrip('"')  # The string after 'dbs:'
 
 def replace_line_in_file(filename, match_string, new_line):
     with open(filename, 'r') as file:
@@ -56,7 +56,7 @@ executable            = {1}
 Proxy_path            = {3}
 arguments             = $(ClusterId) $(ProcId) {4}
 should_Transfer_Files = YES
-transfer_input_files  = {2},$(Proxy_path)
+transfer_input_files  = {2},$(Proxy_path),{5}
 transfer_output_files = ""
 output                = {0}/$(ClusterId).$(ProcId).stdout
 error                 = {0}/$(ClusterId).$(ProcId).stderr
@@ -64,7 +64,7 @@ log                   = {0}/$(ClusterId).$(ProcId).log
 MY.SingularityImage   = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/batch-team/containers/plusbatch/el8-full:latest"
 +JobFlavour           = "workday"
 queue 1
-""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath, proxyfilename)
+""".format(log_dir.name, f'run_MC_{args.year}.sh', args.hadronizer, args.proxypath, proxyfilename, args.hadronizer)
 
     with open(f'condor_MC.jdl','w') as jdlfile:
         jdlfile.write(jdl)
@@ -87,6 +87,7 @@ if __name__ == "__main__":
     parser.add_argument("--hadronizer", dest="hadronizer",  required = True,  help="Hadronizer file")
     parser.add_argument("--proxypath",  dest="proxypath",   required = True,  help="Full AFS path to your x509 proxy", type=str)
     parser.add_argument("--eospath",    dest="eospath",     required = True,  help="EOS path to store NanoAODs", type=str)
+    parser.add_argument("--pyedits", dest="pyedits",  required = True,  help="Python file to manage premix file paths")
     parser.add_argument("--backup",     dest="backup",      default="",       help="Extra path to save NanoAOD", type=str)
     parser.add_argument("--nevt",       dest="nevt",        default=10,      help="Number of events to produce, default = 10", type=int)
     parser.add_argument("--year",       dest="year",        default=2023,     help="Year for MC production")

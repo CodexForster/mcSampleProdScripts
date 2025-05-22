@@ -48,9 +48,9 @@ mv ${BASEDIR}/{{ lhegs_cmssw }}/src/vbfhToWW2L2Nu_LHEGS.root ./
 ### DIGI-Premix step
 ############
 echo "********** DIGI Premix start **********"
-export X509_USER_PROXY=${3}
-voms-proxy-info -all
-voms-proxy-info -all -file ${3}
+# export X509_USER_PROXY=${3}
+# voms-proxy-info -all
+# voms-proxy-info -all -file ${3}
 {{ drpremix_command }}
 cmsRun DRPremix_cfg.py
 
