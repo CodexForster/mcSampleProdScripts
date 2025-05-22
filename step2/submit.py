@@ -9,6 +9,7 @@ def extract_after_dbs(filename):
         for line in f:
             match = re.search(r'dbs:(/\S+)', line)
             if match:
+                print("Match found: ", match.group(1).rstrip('"'))
                 return match.group(1).rstrip('"')  # The string after 'dbs:'
 
 def replace_line_in_file(filename, match_string, new_line):
@@ -39,7 +40,7 @@ def make_jobs(args, base_dir):
 full_path="/eos/cms$location/"
 find "$full_path" -type f > find_query_list_test.txt
 sed -i "s|/eos/cms/|/|g; s|root$|root|g" find_query_list_test.txt
-python3 update_paths.py""".format(extract_after_dbs(f'run_MC_{args.year}.sh'))
+python3 ${BASEDIR}/update_paths.py""".format(extract_after_dbs(f'run_MC_{args.year}.sh'))
     replace_line_in_file(f'run_MC_{args.year}.sh', 'cmsRun DRPremix_cfg.py', updating_premix_files)
 
     ### Condor Job Flavour = Maximum wall time
