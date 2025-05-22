@@ -2,6 +2,24 @@ from bash_template import make_template
 import argparse
 import os
 from pathlib import Path
+import re
+
+def extract_after_dbs(filename):
+    with open(filename, 'r') as f:
+        for line in f:
+            match = re.search(r'dbs:(/\S+)', line)
+            if match:
+                return match.group(1)  # The string after 'dbs:'
+
+def replace_line_in_file(filename, match_string, new_line):
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+
+    with open(filename, 'w') as file:
+        for line in lines:
+            if match_string in line:
+                file.write(new_line + '\n')  # insert before match
+            file.write(line)  # write the original line
 
 ######################################
 def make_jobs(args, base_dir):
@@ -17,6 +35,12 @@ def make_jobs(args, base_dir):
     bash_template = make_template(args.eospath, str(args.year), args.nevt, args.backup)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
         bashfile.write(bash_template)
+    updating_premix_files = """location=$(dasgoclient -query="file dataset={0}" | head -n 1 | sed 's/\/[^/]*\/[^/]*$//')
+full_path="/eos/cms$location/"
+find "$full_path" -type f > find_query_list_test.txt
+sed -i "s|/eos/cms/|/|g; s|root$|root|g" find_query_list_test.txt
+python3 update_paths.py""".format(extract_after_dbs(f'run_MC_{args.year}.sh'))
+    replace_line_in_file(f'run_MC_{args.year}.sh', 'cmsRun DRPremix_cfg.py', updating_premix_files)
 
     ### Condor Job Flavour = Maximum wall time
     ### espresso     = 20 minutes

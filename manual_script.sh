@@ -13,8 +13,17 @@ cmsRun wmLHEGS_cfg.py
 
 cmsDriver.py --python_filename DRPremix_cfg.py --mc --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --conditions 130X_mcRun3_2023_realistic_v14  --fileout file:vbfhToWW2L2Nu_DRPremix.root --pileup_input "dbs:/Neutrino_E-10_gun/Run3Summer21PrePremix-Summer23_130X_mcRun3_2023_realistic_v13-v1/PREMIX" --step DIGI,DATAMIX,L1,DIGI2RAW,HLT:2023v12 --procModifiers premix_stage2 --nThreads 4 --geometry DB:Extended --datamix PreMix --era Run3_2023  --filein file:vbfhToWW2L2Nu_LHEGS.root --no_exec -n 10
 
-dasgoclient -query="file dataset=/Neutrino_E-10_gun/Run3Summer21PrePremix-Summer23_130X_mcRun3_2023_realistic_v13-v1/PREMIX" > das_query_list.txt
-find /eos/cms/store/mc/Run3Summer21PrePremix/Neutrino_E-10_gun/PREMIX/Summer23_130X_mcRun3_2023_realistic_v13-v1/ -type f > find_query_list.txt
+# dasgoclient -query="file dataset=/Neutrino_E-10_gun/Run3Summer21PrePremix-Summer23_130X_mcRun3_2023_realistic_v13-v1/PREMIX" > das_query_list.txt
+# find /eos/cms/store/mc/Run3Summer21PrePremix/Neutrino_E-10_gun/PREMIX/Summer23_130X_mcRun3_2023_realistic_v13-v1/ -type f > find_query_list.txt
+location=$(dasgoclient -query="file dataset=/Neutrino_E-10_gun/Run3Summer21PrePremix-Summer23_130X_mcRun3_2023_realistic_v13-v1/PREMIX" | head -n 1 | sed 's/\/[^/]*\/[^/]*$//')
+full_path="/eos/cms$location/"
+find "$full_path" -type f > find_query_list_test.txt
+# Replace '/eos/cms/' with '/' and 'root' with 'root,' in the file
+sed -i "s|/eos/cms/|/|g; s|root$|root|g" find_query_list_test.txt
+# sed -i '${s|,$||}' find_query_list_test.txt
+
+python3 update_paths.py
+
 # Use the output of find_query_list.txt in DRPremix_cfg.py as not all secondary files in DRPremix_cfg.py are accessible.
 cmsRun DRPremix_cfg.py
 
@@ -26,3 +35,4 @@ cmsRun miniAOD_cfg.py
 
 cmsDriver.py --python_filename nanoAOD_cfg.py --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions 130X_mcRun3_2023_realistic_v14 --step NANO --nThreads 4 --scenario pp --era Run3_2023  --filein file:vbfhToWW2L2Nu_miniAOD.root --fileout file:vbfhToWW2L2Nu_nanoAOD.root --no_exec --mc -n 10
 cmsRun nanoAOD_cfg.py
+
