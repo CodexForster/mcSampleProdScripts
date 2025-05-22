@@ -36,11 +36,13 @@ def make_jobs(args, base_dir):
     bash_template = make_template(args.eospath, str(args.year), args.nevt, args.backup)
     with open(f'run_MC_{args.year}.sh','w') as bashfile:
         bashfile.write(bash_template)
-    updating_premix_files = """location=$(dasgoclient -query="file dataset={0}" | head -n 1 | sed 's/\/[^/]*\/[^/]*$//')
-full_path="/eos/cms$location/"
-find "$full_path" -type f > find_query_list_test.txt
+    updating_premix_files = """#location=$(dasgoclient -query="file dataset={0}" | head -n 1 | sed 's/\/[^/]*\/[^/]*$//')
+#full_path="/eos/cms$location/"
+# find "$full_path" -type f > find_query_list_test.txt
+find {1} -type f > find_query_list_test.txt
 sed -i "s|/eos/cms/|/|g; s|root$|root|g" find_query_list_test.txt
-python3 ${BASEDIR}/update_paths.py""".format(extract_after_dbs(f'run_MC_{args.year}.sh'))
+mv ${BASEDIR}/update_paths.py ./
+python3 update_paths.py""".format(extract_after_dbs(f'run_MC_{args.year}.sh'), args.premix_file_path)
     replace_line_in_file(f'run_MC_{args.year}.sh', 'cmsRun DRPremix_cfg.py', updating_premix_files)
 
     ### Condor Job Flavour = Maximum wall time
@@ -87,6 +89,7 @@ if __name__ == "__main__":
     parser.add_argument("--path",       dest="path",        required = True,  help="Input path to LHE files", type=str)
     parser.add_argument("--hadronizer", dest="hadronizer",  required = True,  help="Hadronizer file")
     parser.add_argument("--proxypath",  dest="proxypath",   required = True,  help="Full AFS path to your x509 proxy", type=str)
+    parser.add_argument("--premix_file_path",  dest="premix_file_path",   required = True,  help="Full AFS path to premix files", type=str)
     parser.add_argument("--eospath",    dest="eospath",     required = True,  help="EOS path to store NanoAODs", type=str)
     parser.add_argument("--pyedits", dest="pyedits",  required = True,  help="Python file to manage premix file paths")
     parser.add_argument("--backup",     dest="backup",      default="",       help="Extra path to save NanoAOD", type=str)
