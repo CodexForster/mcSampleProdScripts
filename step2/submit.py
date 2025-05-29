@@ -41,7 +41,7 @@ def make_jobs(args, base_dir):
 # find "$full_path" -type f > find_query_list_test.txt
 find {1} -type f > find_query_list_test.txt
 sed -i "s|/eos/cms/|/|g; s|root$|root|g" find_query_list_test.txt
-mv \${{BASEDIR}}/update_paths.py ./
+mv ${{BASEDIR}}/update_paths.py ./
 python3 update_paths.py""".format(extract_after_dbs(f'run_MC_{args.year}.sh'), args.premix_file_path)
     replace_line_in_file(f'run_MC_{args.year}.sh', 'cmsRun DRPremix_cfg.py', updating_premix_files)
 
