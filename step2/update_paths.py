@@ -16,19 +16,14 @@ with open('DRPremix_cfg.py', 'w') as f:
     file_names_found = False  # Track if the fileNames declaration is found
     for line in lines:
         if 'process.mixData.input.fileNames = cms.untracked.vstring([' in line:
-            f.write(line)  # Write the line with the fileNames declaration
-            inside_file_names = True
             file_names_found = True
-            # Handle the case where the list is empty
-            if 'cms.untracked.vstring([])' in line:
-                f.writelines('\n'.join(formatted_paths) + '\n')
-                inside_file_names = False
+            # Start writing the new fileNames declaration
+            f.write('process.mixData.input.fileNames = cms.untracked.vstring([\n')
+            f.writelines('\n'.join(formatted_paths) + '\n])\n')
+            inside_file_names = True  # Skip any existing elements
         elif inside_file_names:
             if '])' in line:  # End of the fileNames list
-                f.writelines('\n'.join(formatted_paths) + '\n')
-                f.write(line)  # Write the closing bracket
-                inside_file_names = False
-            # Skip the old file paths
+                inside_file_names = False  # Stop skipping lines
         else:
             f.write(line)  # Write other lines unchanged
 
