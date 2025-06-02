@@ -10,23 +10,12 @@ formatted_paths[-1] = formatted_paths[-1][:-1]  # Remove the trailing comma from
 with open('DRPremix_cfg.py', 'r') as f:
     lines = f.readlines()
 
-# Replace or insert the file paths in DRPremix_cfg.py
-with open('DRPremix_cfg.py', 'w') as f:
-    inside_file_names = False
-    file_names_found = False  # Track if the fileNames declaration is found
+# Replace the fileNames line in DRPremix_cfg.py while maintaining the order
+with open('DRPremix_cfg2.py', 'w') as f:
     for line in lines:
-        if 'process.mixData.input.fileNames = cms.untracked.vstring([' in line:
-            file_names_found = True
-            # Start writing the new fileNames declaration
+        # Replace the line that starts with the fileNames declaration
+        if line.strip().startswith('process.mixData.input.fileNames = cms.untracked.vstring(['):
             f.write('process.mixData.input.fileNames = cms.untracked.vstring([\n')
             f.writelines('\n'.join(formatted_paths) + '\n])\n')
-            inside_file_names = True  # Skip any existing elements
-        elif inside_file_names:
-            if '])' in line:  # End of the fileNames list
-                inside_file_names = False  # Stop skipping lines
         else:
-            f.write(line)  # Write other lines unchanged
-
-    # If the fileNames declaration was not found, raise an error
-    if not file_names_found:
-        raise ValueError("The file 'DRPremix_cfg.py' does not contain 'process.mixData.input.fileNames'.")
+            f.write(line)  # Write all other lines unchanged
