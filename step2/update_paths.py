@@ -11,7 +11,7 @@ with open('DRPremix_cfg.py', 'r') as f:
     lines = f.readlines()
 
 # Replace the fileNames line in DRPremix_cfg.py while maintaining the order
-with open('DRPremix_cfg2.py', 'w') as f:
+with open('DRPremix_cfg.py', 'w') as f:
     for line in lines:
         # Replace the line that starts with the fileNames declaration
         if line.strip().startswith('process.mixData.input.fileNames = cms.untracked.vstring(['):

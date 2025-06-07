@@ -12,7 +12,7 @@ def main():
 
     os.system('mkdir -p logs')
 
-    num_nodes = 1
+    num_nodes = 20
     for i in range(num_nodes):
         # Recreate the condor submission file                                                                   
         subfile = "logs/d"+str(i)+".sub"
@@ -27,7 +27,7 @@ def main():
         f.write("arguments             = $(ClusterId) $(ProcId) x509up_u154072\n")
         f.write("should_Transfer_Files = YES\n")
         # f.write("request_memory          = 6000 \n")
-        f.write("transfer_input_files  = /afs/cern.ch/user/d/dshekar/private/mcSamples/powheg/CMSSW_13_0_13/src/Configuration/GenProduction/python/vbf_h_ww_2l2Nu_el8_amd64_gcc11_CMSSW_13_0_13-fragment.py, $(Proxy_path), /afs/cern.ch/user/d/dshekar/private/mcSamples/powheg/mcSampleProdScripts/step2/update_paths.py\n")
+        f.write("transfer_input_files  = /afs/cern.ch/user/d/dshekar/private/mcSamples/ZH_HWW_Z2L/step2/ZH_Hto2W_Zto2L_M-125_TuneCP5_13p6TeV_powheg-minlo-fragment.py, $(Proxy_path), /afs/cern.ch/user/d/dshekar/private/mcSamples/ZH_HWW_Z2L/step2/update_paths.py\n")
         f.write("transfer_output_files   = \"\" \n")
         f.write("output                  = logs/$(ClusterId).$(ProcId).out \n")
         f.write("error                   = logs/$(ClusterId).$(ProcId).err \n")
@@ -36,7 +36,7 @@ def main():
         
         # Job flavour determines job wall time                                                                  
         # https://batchdocs.web.cern.ch/local/submit.html#job-flavours                                          
-        f.write("+JobFlavour             = \"longlunch\" \n")
+        f.write("+JobFlavour             = \"testmatch\" \n")
         f.write("queue \n")
         
         f.close()
