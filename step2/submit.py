@@ -27,7 +27,7 @@ def main():
         f.write("arguments             = $(ClusterId) $(ProcId) x509up_u154072\n")
         f.write("should_Transfer_Files = YES\n")
         # f.write("request_memory          = 6000 \n")
-        f.write("transfer_input_files  = /afs/cern.ch/user/d/dshekar/private/mcSamples/ZH_HWW_Z2L/step2/ZH_Hto2W_Zto2L_M-125_TuneCP5_13p6TeV_powheg-minlo-fragment.py, $(Proxy_path), /afs/cern.ch/user/d/dshekar/private/mcSamples/ZH_HWW_Z2L/step2/update_paths.py\n")
+        f.write("transfer_input_files  = /afs/cern.ch/user/d/dshekar/private/mcSamples/ggzh/step2/ggHZ_HanythingJ_NNPDF31_13p6TeV_M125_Vleptonic-fragment.py, $(Proxy_path), /afs/cern.ch/user/d/dshekar/private/mcSamples/ggzh/step2/update_paths.py\n")
         f.write("transfer_output_files   = \"\" \n")
         f.write("output                  = logs/$(ClusterId).$(ProcId).out \n")
         f.write("error                   = logs/$(ClusterId).$(ProcId).err \n")
