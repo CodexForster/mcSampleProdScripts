@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-# Submission script for parallel processing of Morris' .gz files on lxplus
-# For a new dataset, make sure the range of integers below matches the file names
-
 import os, sys
 import subprocess
 import argparse
@@ -12,7 +9,7 @@ def main():
 
     os.system('mkdir -p logs')
 
-    num_nodes = 20
+    num_nodes = 1000
     for i in range(num_nodes):
         # Recreate the condor submission file                                                                   
         subfile = "logs/d"+str(i)+".sub"
@@ -36,7 +33,7 @@ def main():
         
         # Job flavour determines job wall time                                                                  
         # https://batchdocs.web.cern.ch/local/submit.html#job-flavours                                          
-        f.write("+JobFlavour             = \"testmatch\" \n")
+        f.write("+JobFlavour             = \"nextweek\" \n")
         f.write("queue \n")
         
         f.close()

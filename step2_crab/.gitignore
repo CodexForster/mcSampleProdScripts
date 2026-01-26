@@ -1,0 +1,6 @@
+*__pycache__*
+*jdl
+*.cc
+logs
+*fragment.py
+*.txt
